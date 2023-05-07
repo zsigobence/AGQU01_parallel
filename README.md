@@ -1,1 +1,6 @@
-# AGQU01_parallel
+# Féléves feladat specifikációi:
+POSIX:
+
+OPENMP:
+
+JAVA thread:
