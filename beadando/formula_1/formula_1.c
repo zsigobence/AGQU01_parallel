@@ -19,10 +19,10 @@ void *race1(void *arg) {
     int thread_id = data->thread_id;
     srand(time(NULL) + data->num_for_rand);
     if(thread_id < 6){
-        j = -100;
+        j = -800;
     }
     if(thread_id > 15){
-        j = 100;
+        j = 800;
     }
     int wait_time = rand() % 1000 + 80000 + j; 
 
@@ -38,10 +38,10 @@ void *race2(void *arg) {
     int thread_id = data->thread_id;
     srand(time(NULL) + data->num_for_rand);
     if(thread_id < 8){
-        j = -1;
+        j = -1000;
     }
     if(thread_id > 11){
-        j = 1;
+        j = 1000;
     }
     int wait_time = rand() % 1100 + 94000 + j; 
 
@@ -147,7 +147,7 @@ int main() {
     }
 
     for (i = 0; i < NUM_THREADS; i++) {
-        printf("%d\n",car_points[i]);
+        printf("%d: %d\n",i+1,car_points[i]);
     }
 
     for (i = 0; i < NUM_THREADS; i++) {
@@ -167,7 +167,7 @@ int main() {
     }
 
     for (i = 0; i < NUM_THREADS; i++) {
-        printf("%d\n",car_points[i]);
+        printf("%d: %d\n",i+1,car_points[i]);
     }
 
     for (i = 0; i < NUM_THREADS; i++) {
@@ -187,7 +187,7 @@ int main() {
     }
 
     for (i = 0; i < NUM_THREADS; i++) {
-        printf("%d\n",car_points[i]);
+        printf("%d: %d\n",i+1,car_points[i]);
     }
 
     printf("And the championship winner is car %d",winner(car_points)+1);

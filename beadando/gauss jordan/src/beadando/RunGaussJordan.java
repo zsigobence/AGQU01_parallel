@@ -24,7 +24,8 @@ public class RunGaussJordan {
 		         
 		        try {
 		            PrintWriter writer = new PrintWriter("results.txt", "UTF-8");
-		            
+
+			        writer.println(totalTime);
 		        for(int i = 2;i<1003;i+=100) {
 		        startTime = System.currentTimeMillis();
 		        GaussJordanParallel.gaussJordanElimination(matrix, i); 
@@ -37,7 +38,10 @@ public class RunGaussJordan {
 		        else {
 			        System.out.println("A szekvenciális eset " + (totalTimeParallel - totalTime) + " ms-el gyorsabb volt");
 		        }
-		        writer.println(totalTime - totalTimeParallel);
+		        writer.print(i);
+		        writer.print(" ");
+		        writer.println(totalTimeParallel);
+
 		        }
 		        
 		        
