@@ -6,17 +6,18 @@ import java.io.PrintWriter;
 public class RunGaussJordan {
 
 	public static void main(String[] args) {
-		        int n = 1000; 
-		        double[][] matrix = createRandomMatrix(n);
+		        int matrixLenght = 1000; 
+		        double[][] matrix = createRandomMatrix(matrixLenght);
 		        long startTime;
 		        long endTime;
 		        long totalTime;
-		        long totalTimeParallel = 0;
-		        
+		        long totalTimeParallel;
+		        int maxNumThreads = 1003;
+		        GaussJordan gaussjordan = new GaussJordan(matrix);
 		        
 		        startTime = System.currentTimeMillis(); 
-		        matrix = createRandomMatrix(n);
-		        GaussJordan.gaussJordanElimination(matrix); 
+		        
+		        gaussjordan.gaussJordanElimination(0,matrixLenght); 
 		        endTime = System.currentTimeMillis(); 
 		        totalTime = endTime - startTime; 
 		        System.out.println("Futtatási idő(szekvenciális): " + totalTime + " ms"); 
@@ -26,9 +27,10 @@ public class RunGaussJordan {
 		            PrintWriter writer = new PrintWriter("results.txt", "UTF-8");
 
 			        writer.println(totalTime);
-		        for(int i = 2;i<1003;i+=100) {
+		        for(int i = 2;i<maxNumThreads;i+=100) {
+		        matrix = createRandomMatrix(matrixLenght);
 		        startTime = System.currentTimeMillis();
-		        GaussJordanParallel.gaussJordanElimination(matrix, i); 
+		        GaussJordanParallel.gaussJordanEliminationParallel(matrix, i); 
 		        endTime = System.currentTimeMillis(); 
 		        totalTimeParallel = endTime - startTime; 
 		        System.out.println("Futtatási idő(párhuzamos " + i + " szálon): " + totalTimeParallel + " ms");

@@ -12,12 +12,7 @@ int roll_ball(int pins) {
     return rand() % (pins+1);
 }
 
-bool is_alldown(int pins) {
-    if(pins == 0)
-    return true;
-    else
-    return false;
-}
+//a függvény helyett beírtam a feltételekbe hogy pins == 0
 
 
 int simulate_bowling_game() {
@@ -35,7 +30,7 @@ int simulate_bowling_game() {
         pins -= first_roll;
         //printf("Dobas 1: %d\n", first_roll);
         
-        if (is_alldown(pins)) {
+        if (pins == 0) {
             //printf("Strike!\n\n");
             total_score += 10;
             if(plus_point != 0){
@@ -72,7 +67,7 @@ int simulate_bowling_game() {
         }
         
 
-        if(is_alldown(pins)){
+        if(pins == 0){
             //printf("Spare!\n");
             plus_point++;
         }

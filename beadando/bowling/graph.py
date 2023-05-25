@@ -9,7 +9,7 @@ with open("results.txt", "r") as file:
         if line_index == 0:
             parallel_line_y = float(data[0])
         else:
-            x.append(float(data[0]))
+            x.append(int(data[0]))
             y.append(float(data[1]))
 
 plt.plot(x, y)
@@ -20,5 +20,5 @@ plt.axhline(y=parallel_line_y, color='r', linestyle='--')
 plt.xlabel("Number of threads")
 plt.ylabel("Time")
 plt.title("Data")
-
+plt.xticks(list(map(int, x)))
 plt.show()
