@@ -9,7 +9,6 @@
 typedef struct race_data {
    int thread_id;
    int num_for_rand;
-   int race_number;
    int lap_time;
    int adv_cars;
    int advantage;
@@ -22,15 +21,14 @@ void *race(void *arg) {
     
     int adv = 0;
     int thread_id = data->thread_id;
-    int race_number = data->race_number;
     int race_time;
     int advantage = data->advantage;
     int adv_cars = data->adv_cars;
     int max_diff = data->max_diff;
     int lap_time = data->lap_time;
     srand(time(NULL) + data->num_for_rand);
-    switch(race_number){
-        case 1:
+    printf("%d\n",adv_cars);
+    
             if(thread_id < adv_cars){
             adv = advantage * -1;
             }
@@ -39,22 +37,6 @@ void *race(void *arg) {
             }
             race_time = rand() % max_diff + lap_time + adv; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
-        break;
-        case 2:
-            if(thread_id < adv_cars){
-            adv = advantage * -1;
-            }
-            if(thread_id >= NUM_THREADS-adv_cars){
-            adv = advantage;
-            }
-            race_time = rand() % max_diff + lap_time + adv; 
-            printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
-        break;
-        case 3:
-            race_time = rand() % max_diff + lap_time; 
-            printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
-        break;
-    }
     
     pthread_exit((void*)race_time); 
 }
@@ -108,16 +90,21 @@ int main() {
     for (i = 0; i < NUM_THREADS; i++) {
         car_points[i] = 0;
     }
-
-    for(int race_number = 1;race_number<4;race_number++){
+    
+    for(int race_number = 1;race_number < 4;race_number++){
         for (i = 0; i < NUM_THREADS; i++) {
         race_data[i].thread_id = i;
         race_data[i].num_for_rand = rand()%10000 + 1;
-        race_data[i].race_number = race_number;
-        race_data[i].adv_cars = 6 + race_number;
-        race_data[i].advantage = 800 + race_number * 100;
         race_data[i].max_diff = 1200 - race_number * 100;
         race_data[i].lap_time = 80000 + race_number * 15000;
+        if(race_number < 3){
+            race_data[i].adv_cars = 6 + race_number;
+            race_data[i].advantage = 800 + race_number * 100;
+        } 
+        else{
+            race_data[i].adv_cars = 0;
+            race_data[i].advantage = 0;
+        } 
         pthread_create(&threads[i], NULL, race, &race_data[i]);
     }
 
