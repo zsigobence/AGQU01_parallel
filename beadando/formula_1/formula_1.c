@@ -20,30 +20,36 @@ void *race(void *arg) {
     int thread_id = data->thread_id;
     int race_number = data->race_number;
     int race_time;
+    int advantage = 900;
+    int adv_cars = 6;
+    int max_diff = 1100;
+    int race1_time = 80000;
+    int race2_time = 94000;
+    int race3_time = 105000;
     srand(time(NULL) + data->num_for_rand);
     switch(race_number){
         case 1:
-            if(thread_id < 6){
-            j = -800;
+            if(thread_id < adv_cars){
+            j = advantage * -1;
             }
-            if(thread_id > 15){
-            j = 800;
+            if(thread_id >= NUM_THREADS-adv_cars){
+            j = advantage;
             }
-            race_time = rand() % 1000 + 80000 + j; 
+            race_time = rand() % max_diff + race1_time + j; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
         break;
         case 2:
-            if(thread_id < 8){
-            j = -1000;
+            if(thread_id < adv_cars){
+            j = advantage * -1;
             }
-            if(thread_id > 11){
-            j = 1000;
+            if(thread_id >= NUM_THREADS-adv_cars){
+            j = advantage;
             }
-            race_time = rand() % 1100 + 94000 + j; 
+            race_time = rand() % max_diff + race2_time + j; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
         break;
         case 3:
-            race_time = rand() % 1200 + 105000; 
+            race_time = rand() % max_diff + race3_time; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
         break;
     }
@@ -59,41 +65,22 @@ int race_points(int race_results[],int i){
             placement++;
         }
     }
-    switch(placement){
-        case 1:
+    switch(placement) {
+    case 1:
         return 25;
-        break;
-        case 2:
+    case 2:
         return 18;
-        break;
-        case 3:
+    case 3:
         return 15;
-        break;
-        case 4:
-        return 12;
-        break;
-        case 5:
-        return 10;
-        break;
-        case 6:
-        return 8;
-        break;
-        case 7:
-        return 6;
-        break;
-        case 8:
-        return 4;
-        break;
-        case 9:
-        return 2;
-        break;
-        case 10:
+    case 10:
         return 1;
-        break;
-        default:
+    default:
+        if (placement >= 4 && placement < 10) {
+            return 12 - (placement - 4) * 2;
+        }
         return 0;
-        break;
-    }
+}
+
 }
 
 int winner(int car_points[]){
