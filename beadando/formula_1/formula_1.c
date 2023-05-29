@@ -27,7 +27,6 @@ void *race(void *arg) {
     int max_diff = data->max_diff;
     int lap_time = data->lap_time;
     srand(time(NULL) + data->num_for_rand);
-    printf("%d\n",adv_cars);
     
             if(thread_id < adv_cars){
             adv = advantage * -1;
