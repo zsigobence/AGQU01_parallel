@@ -16,7 +16,7 @@ void *race(void *arg) {
     race_data* data;
     data = (race_data*)arg;
     
-    int j = 0;
+    int adv = 0;
     int thread_id = data->thread_id;
     int race_number = data->race_number;
     int race_time;
@@ -30,22 +30,22 @@ void *race(void *arg) {
     switch(race_number){
         case 1:
             if(thread_id < adv_cars){
-            j = advantage * -1;
+            adv = advantage * -1;
             }
             if(thread_id >= NUM_THREADS-adv_cars){
-            j = advantage;
+            adv = advantage;
             }
-            race_time = rand() % max_diff + race1_time + j; 
+            race_time = rand() % max_diff + race1_time + adv; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
         break;
         case 2:
             if(thread_id < adv_cars){
-            j = advantage * -1;
+            adv = advantage * -1;
             }
             if(thread_id >= NUM_THREADS-adv_cars){
-            j = advantage;
+            adv = advantage;
             }
-            race_time = rand() % max_diff + race2_time + j; 
+            race_time = rand() % max_diff + race2_time + adv; 
             printf("Car %d finished in %d:%d:%d\n", thread_id+1, race_time/60000,(race_time/1000)%60,race_time%1000 );
         break;
         case 3:
